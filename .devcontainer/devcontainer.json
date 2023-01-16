@@ -1,0 +1,38 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "phuang_docker_dev_container_for_VSC_python_2.9",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"dockerFile": "../Dockerfile",
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.env.windows": {
+					"PYTHONPATH": "${workspaceFolder}"
+				},
+				"python.envFile": "${workspaceFolder}/.env",
+				"python.testing.pytestArgs": [
+					"tests"
+				],
+				"python.testing.unittestEnabled": false,
+				"python.testing.pytestEnable": true,
+				"python.formatting.provider": "autopep8",
+				"editor.formatOnSave": true,
+				"python.analysis.typeCheckingMode": "off"
+			},
+			"extensions": [
+				"ms-python.vscode-pylance",
+				"ms-python.python",
+				"GrapeCity.gc-excelviewer",
+				"ms-toolsai.jupyter",
+				"hbenl.vscode-test-explorer"
+			]
+		}
+	}
+	// clone local machine's variable into docker container
+	//"remoteEnv": {
+	//	"variable_name" : "${localEnv:my_var_name}"
+	//}
+	//uncomment to bypass ssl proxy
+	//"settings":{"http.proxyStrictSSL":false}
+}

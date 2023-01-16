@@ -1,0 +1,17 @@
+{
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}"
+    },
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnable": true,
+    "python.formatting.provider": "autopep8",
+    "editor.formatOnSave": true,
+    "python.analysis.typeCheckingMode": "off",
+    "git.ignoreLimitWarning": true,
+    "isort.check": true,
+    "python.testing.pytestEnabled": true
+}
