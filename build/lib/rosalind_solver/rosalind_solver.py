@@ -18,7 +18,6 @@ class RosalindSolver():
         # read in the file
         with open(input_file) as f:
             seq = f.read()
-            seq = seq.strip()
         # first validate the input
         for nuc in seq:
             if nuc.upper() not in self.NUCLEOTIDE:
