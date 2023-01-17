@@ -1,0 +1,15 @@
+
+*.pyc
+r_solver.egg-info/dependency_links.txt
+r_solver.egg-info/PKG-INFO
+r_solver.egg-info/SOURCES.txt
+r_solver.egg-info/top_level.txt
+rsolver.egg-info/dependency_links.txt
+rsolver.egg-info/PKG-INFO
+rsolver.egg-info/SOURCES.txt
+rsolver.egg-info/top_level.txt
+build/lib/rsolver/rosalind_solver.py
+build/lib/rsolver/__init__.py
+build/lib/rosalind_solver/rosalind_solver.py
+build/lib/rosalind_solver/main.py
+build/lib/rosalind_solver/rosalind_solver.py

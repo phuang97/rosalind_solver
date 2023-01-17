@@ -9,4 +9,4 @@ RUN pip install --no-cache-dir \
 #COPY setup.py ./
 #COPY rosalind_solver/__init__.py ./rosalind_solver/
 COPY . ./
-RUN python setup.py develop
+RUN python -m pip install -e .

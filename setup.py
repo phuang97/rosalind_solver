@@ -1,5 +1,6 @@
-from setuptools import setup
 import os
+
+from setuptools import setup, find_packages
 
 PACKAGE_ATTR_FILE = "rosalind_solver/__init__.py"
 
@@ -20,14 +21,14 @@ def get_attribute(attribute: str):
 
 
 setup(
-    name='rosalind_solver',
+    name='rsolver',
     version=get_attribute('__version__'),
     description="phuang97's rosalind solver for practice and documentation",
     author=get_attribute('__author__'),
     author_email=get_attribute('__email__'),
     classifiers=['Programming Language :: Python :: 3.9'],
-    packages=['rosalind_solver'],
-    package_dir={'rosalind_solver': '/rosalind_solver'},
+    packages=['rsolver'],
+    package_dir={'rsolver': 'rosalind_solver'},
     include_package_data=True,
     package_data={'': ['data/*']}
 )
