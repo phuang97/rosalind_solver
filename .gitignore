@@ -13,3 +13,4 @@ build/lib/rsolver/__init__.py
 build/lib/rosalind_solver/rosalind_solver.py
 build/lib/rosalind_solver/main.py
 build/lib/rosalind_solver/rosalind_solver.py
+*build/
