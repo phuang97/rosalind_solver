@@ -27,8 +27,9 @@ setup(
     author=get_attribute('__author__'),
     author_email=get_attribute('__email__'),
     classifiers=['Programming Language :: Python :: 3.9'],
-    packages=['rsolver'],
-    package_dir={'rsolver': 'rosalind_solver'},
+    packages=['stronghold', 'armory'],
+    package_dir={'armory': 'rosalind_solver/armory',
+                 'stronghold': 'rosalind_solver/stronghold'},
     include_package_data=True,
     package_data={'': ['data/*']}
 )
