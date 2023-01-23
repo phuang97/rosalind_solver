@@ -1,3 +1,6 @@
+from Bio.Seq import Seq
+
+
 class RosalindStronghold():
     """
     each function of this class solves a question lsited on RosalindStronghold\n
@@ -5,6 +8,12 @@ class RosalindStronghold():
     """
 
     NUCLEOTIDE = ['A', 'T', 'C', 'G']
+    DNA_COMPLEMENT_DICT = {
+        "A": "T",
+        "C": "G",
+        "T": "A",
+        "G": "C"
+    }
 
     def read_input_content(self, input_file_path: str):
         # read in the file
@@ -13,7 +22,7 @@ class RosalindStronghold():
             content = content.strip()
         return content
 
-    def write_solution_into_output(self, content, output_file_path: str):
+    def write_solution_into_output(self, content: str, output_file_path: str):
         # write content into output file
         with open(output_file_path, "w") as f:
             f.write(content)
@@ -47,3 +56,15 @@ class RosalindStronghold():
                 raise ValueError('sequence contain none nucleotide string')
         # transcribe into RNA string
         return dna_seq.replace('T', 'U')
+
+    def solve_REVC(self, input_file_path: str):
+        """
+        Given: A DNA string s of length at most 1000 bp.
+        Return: The reverse complement sc of s.
+        """
+        # if not using biopython just use python's string.translate() with dict (complement)
+        # and string[::-1] (reverse)
+        dna_seq = Seq(self.read_input_content(input_file_path).upper())
+        revc = dna_seq.reverse_complement()
+        self.write_solution_into_output(
+            str(revc), "solution/revc_solution.txt")
