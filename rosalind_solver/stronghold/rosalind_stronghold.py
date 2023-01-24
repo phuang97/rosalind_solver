@@ -88,9 +88,10 @@ class RosalindStronghold():
         # F2 rabbit count = 1 pair (the pair from F1) + 3*1 pair (reproduced by F1, immature) = 4 pair
         # F3 rabbit count = 4 pair (mature) + 3 pair(immature) = 7 pair
         # F4 rabbit count = 7 + 3*4 = 19 pair
+        # F5 rabbit count = 19 + 3*7 = 40 pair
 
         def fib(n, k):
-            if n < 2:
+            if n < 3:  # Rosalind test case treats F5 as month4, F4 as month 3, etc
                 return 1
             else:
                 return k*fib(n-2, k) + fib(n-1, k)
