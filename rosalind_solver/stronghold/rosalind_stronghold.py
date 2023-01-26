@@ -1,4 +1,5 @@
 from Bio.Seq import Seq
+from Bio.SeqIO import FastaIO
 
 
 class RosalindStronghold():
@@ -98,3 +99,25 @@ class RosalindStronghold():
         solution = fib(int(n), int(k))
         self.write_solution_into_output(
             str(solution), 'solution/fib_solution.txt')
+
+    def solve_GC(self, input_file_path: str):
+        """
+        Given: At most 10 DNA strings in FASTA format (of length at most 1 kbp each).
+        Return: The ID of the string having the highest GC-content, followed by the GC-content of that string. 
+                Rosalind allows for a default error of 0.001 in all decimal answers unless otherwise stated; 
+                please see the note on absolute error below.
+        """
+        # short cutting by using GC, if not simply use collection.Counter with iterator
+        from Bio.SeqUtils import gc_fraction
+        # setup counter variables
+        highest_recorded_gc = 0
+        seq_id = None
+        # take a shortcut by using biopython's fasta iterator
+        with open(input_file_path) as fasta_file:
+            # FastaIterator reads each Fasta item and return individual item as SeqRecord class object
+            for seq_record in FastaIO.FastaIterator(fasta_file):
+                if gc_fraction(seq_record.seq)*100 > highest_recorded_gc:
+                    highest_recorded_gc = gc_fraction(seq_record.seq)*100
+                    seq_id = seq_record.id
+        self.write_solution_into_output(
+            f"{seq_id}\n{highest_recorded_gc}", "solution/gc_solution.txt")

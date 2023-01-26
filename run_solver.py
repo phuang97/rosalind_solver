@@ -25,3 +25,6 @@ rs = RosalindStronghold()
 
 # solve FIB
 # rs.solve_FIB("data/rosalind_fib.txt")
+
+# solve GC
+# rs.solve_GC('data/rosalind_gc.txt')
