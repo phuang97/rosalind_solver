@@ -121,3 +121,17 @@ class RosalindStronghold():
                     seq_id = seq_record.id
         self.write_solution_into_output(
             f"{seq_id}\n{highest_recorded_gc}", "solution/gc_solution.txt")
+
+    def solve_HAMM(self, input_file_path: str):
+        content = self.read_input_content(input_file_path)
+        s1 = content.split("\n")[0]
+        s2 = content.split("\n")[1]
+        # validate len s1 = len s2
+        if len(s1) != len(s2):
+            raise ValueError('input strings have different len')
+        distance = 0
+        for i in range(0, len(s1)):
+            if s1[i] != s2[i]:
+                distance += 1
+        self.write_solution_into_output(
+            f"{distance}", "solution/hamm_solution.txt")
