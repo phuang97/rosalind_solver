@@ -135,3 +135,24 @@ class RosalindStronghold():
                 distance += 1
         self.write_solution_into_output(
             f"{distance}", "solution/hamm_solution.txt")
+
+    def solve_IPRB(self, input_file_path: str):
+        """
+        Given: Three positive integers k, m, and n, representing a population containing k+m+n organisms: k
+               individuals are homozygous dominant for a factor, m are heterozygous, and n are homozygous recessive.
+        Return: The probability that two randomly selected mating organisms will produce an individual possessing 
+                a dominant allele (and thus displaying the dominant phenotype). Assume that any two organisms can mate.
+        """
+        content = self.read_input_content(input_file_path)
+        k = int(content.split(' ')[0])
+        m = int(content.split(' ')[1])
+        n = int(content.split(' ')[2])
+        total = k+m+n
+        domdom = (k/total)*((k-1)/(total-1))
+        hethet = (m/total)*((m-1)/(total-1)) * 0.75
+        domrec = ((k/total)*(n/(total-1))) + ((n/total)*(k/(total-1)))
+        domhet = ((k/total)*(m/(total-1))) + ((m/total)*(k/(total-1)))
+        hetrec = (((m/total)*(n/(total-1))) + ((n/total)*(m/(total-1)))) * 0.5
+        chance = domdom + hethet + domrec + domhet + hetrec
+        self.write_solution_into_output(
+            f'{chance}', 'solution/iprb_solution.txt')

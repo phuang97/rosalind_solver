@@ -30,4 +30,7 @@ rs = RosalindStronghold()
 # rs.solve_GC('data/rosalind_gc.txt')
 
 # solve HAMM
-rs.solve_HAMM("data/rosalind_hamm.txt")
+# rs.solve_HAMM("data/rosalind_hamm.txt")
+
+# solve IPRb
+rs.solve_IPRB('data/rosalind_iprb.txt')
