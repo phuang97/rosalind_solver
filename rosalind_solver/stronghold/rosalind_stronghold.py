@@ -39,6 +39,7 @@ class RosalindStronghold():
         'A', 'C', 'G', and 'T' occur in s. Note: You must provide your answer in the format shown in the sample output below.
         """
         import collections
+
         # read in the file
         seq = self.read_input_content(input_file_path)
         # first validate the input
@@ -112,6 +113,7 @@ class RosalindStronghold():
         """
         # short cutting by using GC, if not simply use collection.Counter with iterator
         from Bio.SeqUtils import gc_fraction
+
         # setup counter variables
         highest_recorded_gc = 0
         seq_id = None
@@ -161,7 +163,25 @@ class RosalindStronghold():
             f'{chance}', 'solution/iprb_solution.txt')
 
     def solve_PROT(self, input_file_path: str):
+        """translate rna into protein"""
         dna_seq = self.read_seq_from_inputfile(input_file_path)
         rna_seq = dna_seq.translate(to_stop=True)
         self.write_solution_into_output(
             f'{rna_seq}', 'solution/prot_solution.txt')
+
+    def solve_SUBS(self, input_file_path: str):
+        """
+        Given: Two DNA strings s and t (each of length at most 1 kbp).
+        Return: All locations of t as a substring of s.
+        """
+        import re
+        content = self.read_input_content(input_file_path)
+        seq = content.split('\n')[0].upper()
+        sub_seq = content.split('\n')[1].upper()
+        sub_len = len(sub_seq)
+        solution = []
+        for i in range(len(seq)-len(sub_seq)+1):
+            if seq[i:i+sub_len] == sub_seq:
+                solution.append(i+1)
+        result = (' ').join([str(x) for x in solution])
+        self.write_solution_into_output(result, 'solution/subs_solution.txt')

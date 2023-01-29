@@ -36,4 +36,7 @@ rs = RosalindStronghold()
 # rs.solve_IPRB('data/rosalind_iprb.txt')
 
 # solve PORT
-rs.solve_PROT('data/rosalind_prot.txt')
+# rs.solve_PROT('data/rosalind_prot.txt')
+
+# solve SUBS
+rs.solve_SUBS('data/rosalind_subs.txt')
