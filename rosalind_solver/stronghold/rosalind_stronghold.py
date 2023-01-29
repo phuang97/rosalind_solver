@@ -29,6 +29,9 @@ class RosalindStronghold():
             f.write(content)
             f.close()
 
+    def read_seq_from_inputfile(self, input_file_path: str) -> Seq:
+        return Seq(self.read_input_content(input_file_path).upper())
+
     def solve_DNA(self, input_file_path: str):
         """
         Given: A DNA string s of length at most 1000 bp.
@@ -156,3 +159,9 @@ class RosalindStronghold():
         chance = domdom + hethet + domrec + domhet + hetrec
         self.write_solution_into_output(
             f'{chance}', 'solution/iprb_solution.txt')
+
+    def solve_PROT(self, input_file_path: str):
+        dna_seq = self.read_seq_from_inputfile(input_file_path)
+        rna_seq = dna_seq.translate(to_stop=True)
+        self.write_solution_into_output(
+            f'{rna_seq}', 'solution/prot_solution.txt')

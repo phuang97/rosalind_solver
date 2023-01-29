@@ -33,4 +33,7 @@ rs = RosalindStronghold()
 # rs.solve_HAMM("data/rosalind_hamm.txt")
 
 # solve IPRb
-rs.solve_IPRB('data/rosalind_iprb.txt')
+# rs.solve_IPRB('data/rosalind_iprb.txt')
+
+# solve PORT
+rs.solve_PROT('data/rosalind_prot.txt')
