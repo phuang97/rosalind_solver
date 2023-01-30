@@ -174,7 +174,6 @@ class RosalindStronghold():
         Given: Two DNA strings s and t (each of length at most 1 kbp).
         Return: All locations of t as a substring of s.
         """
-        import re
         content = self.read_input_content(input_file_path)
         seq = content.split('\n')[0].upper()
         sub_seq = content.split('\n')[1].upper()
@@ -185,3 +184,42 @@ class RosalindStronghold():
                 solution.append(i+1)
         result = (' ').join([str(x) for x in solution])
         self.write_solution_into_output(result, 'solution/subs_solution.txt')
+
+    def solve_CONS(self, input_file_path: str):
+        """
+        Given: A collection of at most 10 DNA strings of equal length (at most 1 kbp) in FASTA format.
+        Return: A consensus string and profile matrix for the collection. 
+                (If several possible consensus strings exist, then you may return any one of them.)
+        """
+        # initiate the dna string matrix as a dict
+        matrix = dict()
+        # read sequences into matrix
+        with open(input_file_path) as fasta_file:
+            for seq_record in FastaIO.FastaIterator(fasta_file):
+                matrix[seq_record.id] = seq_record.seq
+        # set up profile
+        profile = dict()
+        # seq length
+        seq_len = len(list(matrix.values())[0])
+        for nuc in ['A', 'T', 'C', 'G']:
+            profile[nuc] = [0]*seq_len
+        # calculate profile matrix
+        for seq in matrix.values():
+            for position, nuc in enumerate(seq):
+                profile[nuc][position] += 1
+        # calculate consensus
+        consensus_list = list()
+        for position in range(seq_len):
+            count = 0
+            for nuc in ['A', 'T', 'C', 'G']:
+                if profile[nuc][position] >= count:
+                    consensus = nuc
+                    count = profile[nuc][position]
+            consensus_list.append(consensus)
+        # output result
+        profile_result = str()
+        for nuc in ['A', 'C', 'G', 'T']:
+            profile_result += f"{nuc}: {' '.join([str(x) for x in profile[nuc]])}\n"
+        consensus_result = f"{''.join(consensus_list)}\n"
+        self.write_solution_into_output(
+            f"{consensus_result}{profile_result}", 'solution/cons_solution.txt')

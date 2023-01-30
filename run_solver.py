@@ -39,4 +39,7 @@ rs = RosalindStronghold()
 # rs.solve_PROT('data/rosalind_prot.txt')
 
 # solve SUBS
-rs.solve_SUBS('data/rosalind_subs.txt')
+# rs.solve_SUBS('data/rosalind_subs.txt')
+
+# solve CONS
+rs.solve_CONS('data/rosalind_cons.txt')
