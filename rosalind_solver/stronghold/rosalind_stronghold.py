@@ -223,3 +223,51 @@ class RosalindStronghold():
         consensus_result = f"{''.join(consensus_list)}\n"
         self.write_solution_into_output(
             f"{consensus_result}{profile_result}", 'solution/cons_solution.txt')
+
+    def solve_FIBD(self, input_file_path: str):
+        """
+        Given: Positive integers n≤100 and m≤20.
+        Return: The total number of pairs of rabbits that will remain after the n-th month if all rabbits live for m months.
+        start with 1 pair of rabbits, each pair takes 1 month to grow and give birth of 1 pair of off-springs 1 month after grown
+        """
+        content = self.read_input_content(input_file_path)
+        n = content.split(' ')[0]
+        m = content.split(' ')[1]
+
+        # this is too memory heavy
+        # unfinished
+        def fibd(n, m):
+            if n in [1, 2]:
+                return 1
+            elif n < m:
+                return fibd(n-1, m) + fibd(n-2, m)
+            elif n == m:
+                return fibd(n-1, m) + fibd(n-2, m)
+            elif n > m:
+                return fibd(n-1, m) + fibd(n-2, m) - fibd(n-m-2, m)
+
+        def fibd2(n, m):
+            if n in [1, 2]:
+                return 1
+            rabbit_count_list = list()
+            rabbit_count_list.append(1)  # F0 or Month1
+            rabbit_count_list.append(1)  # F1 or Month2
+            for i in range(2, n):
+                if i < m:
+                    rabbit_count_list.append(
+                        rabbit_count_list[i-1] + rabbit_count_list[i-2])
+                if i == m:
+                    rabbit_count_list.append(
+                        rabbit_count_list[i-1] + rabbit_count_list[i-2] - rabbit_count_list[i-m])
+                if i > m:
+                    rabbit_count_list.append(
+                        # rabbit born this month + rabbit we already have - rabbit died(which = rabbit born m-1 month ago)
+                        # all rabbit we have m month ago = list[i-m-1] + list[i-m-2]
+                        # since list[i-m-2] is the rabbit lived from previous months, we don't care about them
+                        # list[i-m-1] is the rabbit born that month
+                        rabbit_count_list[i-1] + rabbit_count_list[i-2] - rabbit_count_list[i-m-1])
+            return rabbit_count_list[n-1]
+        # output result
+        result = fibd2(int(n), int(m))
+        self.write_solution_into_output(
+            f"{result}", 'solution/fibd_solution.txt')
