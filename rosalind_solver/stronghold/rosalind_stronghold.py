@@ -23,11 +23,16 @@ class RosalindStronghold():
             content = content.strip()
         return content
 
-    def write_solution_into_output(self, content: str, output_file_path: str):
+    def write_solution_into_output(self, content: str, output_file_path: str, appending_mode: bool = False):
         # write content into output file
-        with open(output_file_path, "w") as f:
-            f.write(content)
-            f.close()
+        if not appending_mode:
+            with open(output_file_path, "w") as f:
+                f.write(content)
+                f.close()
+        if appending_mode:
+            with open(output_file_path, "a+") as f:
+                f.write(content)
+                f.close()
 
     def read_seq_from_inputfile(self, input_file_path: str) -> Seq:
         return Seq(self.read_input_content(input_file_path).upper())
@@ -271,3 +276,26 @@ class RosalindStronghold():
         result = fibd2(int(n), int(m))
         self.write_solution_into_output(
             f"{result}", 'solution/fibd_solution.txt')
+
+    def solve_GRPH(self, input_file_path: str):
+        """
+        Given: A collection of DNA strings in FASTA format having total length at most 10 kbp.
+        Return: The adjacency list corresponding to O3. You may return edges in any order.
+        """
+        # set up a dict where key = seq.id, values = [head(k),tail(k)]. k=3.
+        ligation_dict = dict()
+        k = 3
+        with open(input_file_path) as fasta_file:
+            for seq_record in FastaIO.FastaIterator(fasta_file):
+                ligation_dict[seq_record.id] = [
+                    seq_record.seq[:k], seq_record.seq[-k:]]
+        # alignment
+        alignment = list()
+        for key, value in ligation_dict.items():
+            for key2, value2 in ligation_dict.items():
+                if value[1] == value2[0] and value != value2:
+                    alignment.append((key, key2))
+        for item in alignment:
+            print(f"{item[0]} {item[1]}")
+            self.write_solution_into_output(
+                f"{item[0]} {item[1]}\n", 'solution/grph_solution.txt', appending_mode=True)
