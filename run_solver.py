@@ -48,24 +48,7 @@ rs = RosalindStronghold()
 # rs.solve_FIBD('data/rosalind_fibd.txt')
 
 # solve GRPH
-rs.solve_GRPH('data/rosalind_grph.txt')
+# rs.solve_GRPH('data/rosalind_grph.txt')
 
-
-def c(data):
-    from Bio import SeqIO
-    seq_name, seq_string = [], []
-    with open(data, 'r') as fa:
-        for seq_record in SeqIO.parse(fa, 'fasta'):
-            seq_name.append(str(seq_record.name))
-            seq_string.append(str(seq_record.seq))
-    # print(seq_name)
-    # print(seq_string)
-
-    for i in range(len(seq_string)):
-        for j in range(len(seq_string)):
-            if i != j:
-                if seq_string[i][-3:] == seq_string[j][:3]:
-                    print(seq_name[i], seq_name[j])
-
-
-# c('data/rosalind_grph.txt')
+# solve IEV
+rs.solve_IEV('data/rosalind_iev.txt')

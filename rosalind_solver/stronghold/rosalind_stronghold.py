@@ -299,3 +299,23 @@ class RosalindStronghold():
             print(f"{item[0]} {item[1]}")
             self.write_solution_into_output(
                 f"{item[0]} {item[1]}\n", 'solution/grph_solution.txt', appending_mode=True)
+
+    def solve_IEV(self, input_file_path: str):
+        """
+        Given: Six nonnegative integers, each of which does not exceed 20,000. 
+        The integers correspond to the number of couples in a population possessing each genotype pairing for a given factor. 
+        In order, the six given integers represent the number of couples having the following genotypes:
+        AA-AA
+        AA-Aa
+        AA-aa
+        Aa-Aa
+        Aa-aa
+        aa-aa
+        Return: The expected number of offspring displaying the dominant phenotype in the next generation, u
+        nder the assumption that every couple has exactly two offspring.
+        """
+        content = self.read_input_content(input_file_path)
+        l = [int(x) for x in content.split(' ')]
+        pr = (l[0] + l[1] + l[2] + l[3]*0.75 + l[4]*0.5)*2
+        print(pr)
+        self.write_solution_into_output(f"pr", "solution/iev_solution.txt")
