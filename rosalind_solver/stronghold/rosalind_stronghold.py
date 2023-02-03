@@ -319,3 +319,56 @@ class RosalindStronghold():
         pr = (l[0] + l[1] + l[2] + l[3]*0.75 + l[4]*0.5)*2
         print(pr)
         self.write_solution_into_output(f"pr", "solution/iev_solution.txt")
+
+    def solve_LCSM(self, input_file_path: str):
+        """
+        Given: A collection of k (k≤100) DNA strings of length at most 1 kbp each in FASTA format.
+        Return: A longest common substring of the collection. (If multiple solutions exist, you may return any single solution.)
+        """
+        def find_shortest_seq(input_file_path):
+            seq_len = 0
+            with open(input_file_path) as fasta_file:
+                for fasta in FastaIO.FastaIterator(fasta_file):
+                    # first find the shortes tring
+                    if seq_len == 0:
+                        seq_len = len(fasta.seq)
+                        seq = fasta.seq
+                    elif len(fasta.seq) < seq_len:
+                        seq_len = len(fasta.seq)
+                        seq = fasta.seq
+            return seq
+
+        def list_all_possible_motif(seq):
+            all_possible_motif_set = set()  # set is faster in searching b/c hash table
+            for i in range(len(seq)):
+                for x in range(i+1, len(seq)+1):
+                    all_possible_motif_set.add(seq[i:x])
+            return all_possible_motif_set
+
+        def identify_longest_motif(input_file_path: str, all_possible_motif_set: set):
+            # remove false motifs
+            updated_motif_set = all_possible_motif_set.copy()
+            with open(input_file_path) as fasta_file:
+                for fasta in FastaIO.FastaIterator(fasta_file):
+                    seq = fasta.seq  # so that fasta.seq is only calcuated 1 time per fasta
+                    for motif in all_possible_motif_set:
+                        if motif not in seq and motif in all_possible_motif_set:
+                            try:
+                                updated_motif_set.remove(motif)
+                            except:
+                                pass
+                    # each iteration we will get a smaller possible motif set to search from
+                    all_possible_motif_set = updated_motif_set.copy()
+            # find the longest motif in motif list
+            length = 0
+            for motif in updated_motif_set:
+                if len(motif) >= length:
+                    longest_motif = motif
+                    length = len(motif)
+            return longest_motif
+        shortest_seq = find_shortest_seq(input_file_path)
+        all_possible_motif = list_all_possible_motif(shortest_seq)
+        result = identify_longest_motif(input_file_path, all_possible_motif)
+        self.write_solution_into_output(
+            f"{result}", "solution/lcsm_solution.txt")
+        print(result)

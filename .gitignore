@@ -15,3 +15,4 @@ build/lib/rosalind_solver/main.py
 build/lib/rosalind_solver/rosalind_solver.py
 *build/
 *__pycache__*
+*rs_venv/
