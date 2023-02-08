@@ -54,4 +54,7 @@ rs = RosalindStronghold()
 # rs.solve_IEV('data/rosalind_iev.txt')
 
 # solve LCSM
-rs.solve_LCSM('data/rosalind_lcsm.txt')
+# rs.solve_LCSM('data/rosalind_lcsm.txt')
+
+# solve LIA
+rs.solve_LIA('data/rosalind_lia.txt')

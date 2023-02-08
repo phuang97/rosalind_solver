@@ -40,7 +40,7 @@ class RosalindStronghold():
     def solve_DNA(self, input_file_path: str):
         """
         Given: A DNA string s of length at most 1000 bp.
-        Return: Four integers (separated by spaces) representing the respective number of times that the symbols 
+        Return: Four integers (separated by spaces) representing the respective number of times that the symbols
         'A', 'C', 'G', and 'T' occur in s. Note: You must provide your answer in the format shown in the sample output below.
         """
         import collections
@@ -82,8 +82,8 @@ class RosalindStronghold():
     def solve_FIB(self, input_file_path: str):
         """
         Given: Positive integers n and k.
-        Return: The total number of rabbit pairs that will be present after n months, 
-        if we begin with 1 pair and in each generation, 
+        Return: The total number of rabbit pairs that will be present after n months,
+        if we begin with 1 pair and in each generation,
         every pair of reproduction-age rabbits produces a litter of k rabbit pairs (instead of only 1 pair).
         """
         content = self.read_input_content(input_file_path)
@@ -112,8 +112,8 @@ class RosalindStronghold():
     def solve_GC(self, input_file_path: str):
         """
         Given: At most 10 DNA strings in FASTA format (of length at most 1 kbp each).
-        Return: The ID of the string having the highest GC-content, followed by the GC-content of that string. 
-                Rosalind allows for a default error of 0.001 in all decimal answers unless otherwise stated; 
+        Return: The ID of the string having the highest GC-content, followed by the GC-content of that string.
+                Rosalind allows for a default error of 0.001 in all decimal answers unless otherwise stated;
                 please see the note on absolute error below.
         """
         # short cutting by using GC, if not simply use collection.Counter with iterator
@@ -150,7 +150,7 @@ class RosalindStronghold():
         """
         Given: Three positive integers k, m, and n, representing a population containing k+m+n organisms: k
                individuals are homozygous dominant for a factor, m are heterozygous, and n are homozygous recessive.
-        Return: The probability that two randomly selected mating organisms will produce an individual possessing 
+        Return: The probability that two randomly selected mating organisms will produce an individual possessing
                 a dominant allele (and thus displaying the dominant phenotype). Assume that any two organisms can mate.
         """
         content = self.read_input_content(input_file_path)
@@ -193,7 +193,7 @@ class RosalindStronghold():
     def solve_CONS(self, input_file_path: str):
         """
         Given: A collection of at most 10 DNA strings of equal length (at most 1 kbp) in FASTA format.
-        Return: A consensus string and profile matrix for the collection. 
+        Return: A consensus string and profile matrix for the collection.
                 (If several possible consensus strings exist, then you may return any one of them.)
         """
         # initiate the dna string matrix as a dict
@@ -302,8 +302,8 @@ class RosalindStronghold():
 
     def solve_IEV(self, input_file_path: str):
         """
-        Given: Six nonnegative integers, each of which does not exceed 20,000. 
-        The integers correspond to the number of couples in a population possessing each genotype pairing for a given factor. 
+        Given: Six nonnegative integers, each of which does not exceed 20,000.
+        The integers correspond to the number of couples in a population possessing each genotype pairing for a given factor.
         In order, the six given integers represent the number of couples having the following genotypes:
         AA-AA
         AA-Aa
@@ -372,3 +372,29 @@ class RosalindStronghold():
         self.write_solution_into_output(
             f"{result}", "solution/lcsm_solution.txt")
         print(result)
+
+    def solve_LIA(self, input_file_path: str):
+        """
+        Given: Two positive integers k(k≤7) and N(N≤2k).
+            In this problem, we begin with Tom, who in the 0th generation has genotype Aa Bb.
+            Tom has two children in the 1st generation, each of whom has two children,
+            and so on. Each organism always mates with an organism having genotype Aa Bb.
+        Return: The probability that at least N
+            Aa Bb organisms will belong to the k-th generation of Tom's family tree (don't count the Aa Bb mates at each level).
+            Assume that Mendel's second law holds for the factors.
+        """
+        import math
+        # AaBb x any genotype will have a 0.25 chance to produce AaBb offspring
+        content = self.read_input_content(input_file_path)
+        k = int(content.split(' ')[0])
+        n = int(content.split(' ')[1])
+        p = 2**k
+        probability = 0
+        # binomial distribution with cumulative distribution (because problem asks for 'at least N')
+        for i in range(n, p + 1):
+            prob = (math.factorial(p) / (math.factorial(i) *
+                    math.factorial(p - i))) * (0.25**i) * (0.75**(p - i))
+            probability += prob
+        print(probability)
+        self.write_solution_into_output(
+            f"{probability}", 'solution/lia_solution.txt')
