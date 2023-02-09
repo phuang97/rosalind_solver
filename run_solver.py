@@ -57,4 +57,7 @@ rs = RosalindStronghold()
 # rs.solve_LCSM('data/rosalind_lcsm.txt')
 
 # solve LIA
-rs.solve_LIA('data/rosalind_lia.txt')
+# rs.solve_LIA('data/rosalind_lia.txt')
+
+# solve MPRT
+rs.solve_MPRT('data/rosalind_mprt.txt')

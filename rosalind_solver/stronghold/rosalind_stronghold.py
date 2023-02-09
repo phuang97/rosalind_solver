@@ -398,3 +398,49 @@ class RosalindStronghold():
         print(probability)
         self.write_solution_into_output(
             f"{probability}", 'solution/lia_solution.txt')
+
+    def solve_MPRT(self, input_file_path: str):
+        """
+        Given: At most 15 UniProt Protein Database access IDs.
+        Return: For each protein possessing the N-glycosylation motif, 
+                output its given access ID followed by a list of locations in the protein string where the motif can be found.
+        """
+        import urllib.request
+        # use urlllib to extract given protein's sequence
+        content = self.read_input_content(input_file_path)
+        seq_dict = dict()
+        # retrive protein sequence in fasta format
+        for acc_id in content.split('\n'):
+            if '_' in acc_id:
+                protein_id = acc_id.split('_')[0]
+                with urllib.request.urlopen(f"http://www.uniprot.org/uniprot/{protein_id}.fasta") as response:
+                    res = response.read()
+                seq_dict[acc_id] = str(res).split('\\n', 1)[
+                    1].replace(r'\n', '')
+            else:
+                protein_id = acc_id
+                with urllib.request.urlopen(f"http://www.uniprot.org/uniprot/{protein_id}.fasta") as response:
+                    res = response.read()
+                seq_dict[acc_id] = str(res).split('\\n', 1)[
+                    1].replace(r'\n', '')
+        # identify motif location
+        motif_dict = dict()
+        for acc_id, seq in seq_dict.items():
+            # check if motif in seq
+            # motif window = 4
+            position_list = list()
+            for i in range(len(seq)-4):
+                # check if P in seq since N-glycosylation motif does not have P
+                if 'P' in seq[i:i+4]:
+                    pass
+                elif seq[i] == 'N' and seq[i+2] in ['S', 'T']:
+                    # rosalind takes position starting with 1
+                    position_list.append(i+1)
+            if len(position_list) != 0:
+                motif_dict[acc_id] = position_list
+        result = f''
+        for acc_id, position in motif_dict.items():
+            result = result + \
+                f"{acc_id}\n{' '.join([str(x) for x in position])}\n"
+        # output
+        self.write_solution_into_output(result, 'solution/MPRT_solution.txt')

@@ -4,6 +4,10 @@
 	"name": "phuang_docker_dev_container_for_VSC_python_2.9",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"dockerFile": "../Dockerfile",
+	// open port 443 for urllib3.request
+	"forwardPorts": [
+		443
+	],
 	"customizations": {
 		"vscode": {
 			"settings": {
