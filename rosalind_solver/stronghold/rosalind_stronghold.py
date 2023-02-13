@@ -1,5 +1,6 @@
 from Bio.Seq import Seq
 from Bio.SeqIO import FastaIO
+from Bio import SeqUtils as ut
 
 
 class RosalindStronghold():
@@ -136,7 +137,6 @@ class RosalindStronghold():
                 please see the note on absolute error below.
         """
         # short cutting by using GC, if not simply use collection.Counter with iterator
-        from Bio.SeqUtils import gc_fraction
 
         # setup counter variables
         highest_recorded_gc = 0
@@ -145,8 +145,8 @@ class RosalindStronghold():
         with open(input_file_path) as fasta_file:
             # FastaIterator reads each Fasta item and return individual item as SeqRecord class object
             for seq_record in FastaIO.FastaIterator(fasta_file):
-                if gc_fraction(seq_record.seq)*100 > highest_recorded_gc:
-                    highest_recorded_gc = gc_fraction(seq_record.seq)*100
+                if ut.gc_fraction(seq_record.seq)*100 > highest_recorded_gc:
+                    highest_recorded_gc = ut.gc_fraction(seq_record.seq)*100
                     seq_id = seq_record.id
         self.write_solution_into_output(
             f"{seq_id}\n{highest_recorded_gc}", "solution/gc_solution.txt")
@@ -421,7 +421,7 @@ class RosalindStronghold():
     def solve_MPRT(self, input_file_path: str):
         """
         Given: At most 15 UniProt Protein Database access IDs.
-        Return: For each protein possessing the N-glycosylation motif, 
+        Return: For each protein possessing the N-glycosylation motif,
                 output its given access ID followed by a list of locations in the protein string where the motif can be found.
         """
         import urllib.request
@@ -479,3 +479,39 @@ class RosalindStronghold():
             [x for x in self.DNA_CODON_DICT.values() if x == '_'])
         mod = possible_dna_seq % 1000000
         print(mod)
+
+    def solve_ORF(self, input_file_path: str):
+        # a reading frame must contain a stop codon
+        # e.g. ATG-without a stop codon is not a reading frame
+        def get_orf(dna):
+            orf_list = list()
+            dna = dna.upper()
+            for frame in (0, 1, 2):
+                for i in range(frame, len(dna), 3):
+                    if dna[i:i+3] == 'ATG':  # i will be orf start position
+                        for j in range(i, len(dna), 3):
+                            if dna[j:j+3] in ['TAA', 'TAG', 'TGA']:  # j+3 is the end position
+                                orf_list.append(
+                                    dna[i:j+3])
+                                break  # stop at the first stop codon
+            return orf_list
+
+        with open(input_file_path) as fasta_file:
+            for seq_record in FastaIO.FastaIterator(fasta_file):
+                input_sequence = Seq(seq_record.seq)
+            # createa a list to store all final translated results
+            protein_result_list = list()
+            # original reading
+            seq_list = get_orf(input_sequence)
+            for seq in seq_list:
+                protein_result_list.append(seq.translate(to_stop=True))
+            # reverse complement reading
+            seq_list2 = get_orf(
+                input_sequence.reverse_complement())
+            for seq in seq_list2:
+                protein_result_list.append(seq.translate(to_stop=True))
+        # drop duplicates in protein_result_list
+        result = '\n'.join([str(x) for x in list(set(protein_result_list))])
+        # output
+        self.write_solution_into_output(result, "solution/orf_solution.txt")
+        print(result)
