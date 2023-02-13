@@ -60,4 +60,7 @@ rs = RosalindStronghold()
 # rs.solve_LIA('data/rosalind_lia.txt')
 
 # solve MPRT
-rs.solve_MPRT('data/rosalind_mprt.txt')
+# rs.solve_MPRT('data/rosalind_mprt.txt')
+
+# solve MRNA
+rs.solve_MRNA('data/rosalind_mrna.txt')
