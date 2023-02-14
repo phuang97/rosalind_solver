@@ -515,3 +515,30 @@ class RosalindStronghold():
         # output
         self.write_solution_into_output(result, "solution/orf_solution.txt")
         print(result)
+
+    def solve_PERM(self, input_file_path: str):
+        import itertools
+        import math
+        n = int(self.read_input_content(input_file_path))
+        # calculate total possibility
+        pr = math.factorial(n)
+
+        def permutations(iterable, r=None):
+            # this is the permutation function grabbed from itertools
+            # there are 2 method provided by itertools, this one uses product() and modified to return all result in list
+            result = list()
+            pool = tuple(iterable)
+            n = len(pool)
+            r = n if r is None else r
+            for indices in itertools.product(range(n), repeat=r):
+                if len(set(indices)) == r:
+                    result.append(tuple(pool[i] for i in indices))
+            return result
+
+        result = '\n'.join([str(x)
+                           for x in permutations(range(1, n+1)) if x != None])
+        for symbol in ['(', ')', ',']:
+            result = result.replace(symbol, '')
+        self.write_solution_into_output(
+            f"{pr}\n{result}", 'solution/perm_solution.txt')
+        print(f"{pr}\n{result}")
